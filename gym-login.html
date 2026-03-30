@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Thameur Gym</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="top-nav">
+        <a href="index.html" class="btn btn-outline btn-small">← Home</a>
+    </div>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Login to continue your fitness journey</p>
+            <form>
+                <div class="form-group">
+                    <input type="email" id="loginEmail" class="form-input" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" class="form-input" placeholder="Password">
+                </div>
+                <button type="button" onclick="validateLogin()" class="btn btn-primary btn-full">Login</button>
+            </form>
+            <p class="auth-link">Don't have an account? <a href="gym-signup.html">Sign Up</a></p>
+        </div>
+    </div>
+
+    <script>
+        function verifEmail(email) {
+    let posAt = email.indexOf('@');
+    let posDot = email.lastIndexOf('.');
+    let ch1 = email.substr(0, posAt);               
+    let ch2 = email.substr(posAt + 1, posDot - posAt - 1);
+    let ch3 = email.substr(posDot + 1);
+
+
+    let nb=0;
+    for (let i=0; i<email.length; i++) {
+        if (email.charAt(i) == '@') {
+            nb=nb+1;
+        }
+    }
+
+
+
+    return (ch1.length > 0 && ch2.length > 0 && ch3.length >= 2 && email.charAt(0)!='@' && email.charAt(0)!='.' && nb==1);
+}
+
+
+
+function passverif(ch) {
+    let maj = 0, min = 0, num = 0;
+    for (let i=0; i<ch.length; i++) {
+        if (ch.charAt(i) >= 'A' && ch.charAt(i) <= 'Z') {
+            maj++;
+        } else if (ch.charAt(i) >= 'a' && ch.charAt(i) <= 'z') {
+            min++;
+        } else if (ch.charAt(i) >= '0' && ch.charAt(i) <= '9') {
+            num++;
+        }
+    }
+    return (maj > 0 && min > 0 && num > 0);
+}
+
+
+
+
+
+
+function validateSignup() {
+    namee = document.getElementById("name").value;
+    email = document.getElementById("email").value;
+    pass = document.getElementById("password").value;
+
+    
+
+    if (namee === "") {
+        alert("Ismik mayelzimch ykoun farigh!");
+        
+    }
+    else if (!verifEmail(email)) {
+        alert("Email mta3ik ghalit (check @ w dot).");
+    }
+    else if (passverif(pass) == false) {
+        alert("L'mot de passe lazim fih caracter maju w minis w numero.");
+    }
+}
+
+function validateLogin() {
+    const email = document.getElementById("loginEmail").value;
+    const pass = document.getElementById("loginPassword").value;
+
+
+    if (!verifEmail(email)) {
+        alert("Email ghalit!");
+    }
+    else if (pass === "") {
+        alert("Saisir mot de passe!");
+    }
+}
+
+
+
+
+
+function calculateResults() {
+    const goal = document.getElementById("goal").value;
+    const duration = parseInt(document.getElementById("duration").value);
+    const resb = document.getElementById("result-box");
+    const resultText = document.getElementById("prediction-text");
+
+    let minR, maxR;
+    if (goal === "bulk") {
+        minR = duration * 1; maxR = duration * 2;
+        resultText.innerHTML = `💪 Bulking: Motwa9a3 tzid bin <span style="color:#ffffff">${minR}kg</span> w <span style="color:#ffffff">${maxR}kg</span> f'moddet ${duration} ch-har!`;
+    } else {
+        minR = duration * 2; maxR = duration * 4;
+        resultText.innerHTML = `🔥 Cutting: Motwa9a3 todhef bin <span style="color:#ffffff">${minR}kg</span> w <span style="color:#ffffff">${maxR}kg</span> f'moddet ${duration} ch-har!`;
+    }
+    resb.style.display = "block";
+}
+
+
+    </script>
+</body>
+</html>
